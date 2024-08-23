@@ -37,7 +37,7 @@ jobs:
           #with:
           #subject-path: '../${{ github.event.repository.name }}-${{ github.ref_name }}.zip'
       - name: attest renamed zip
-        run: ls && ls ls -R ${{ github.workspace }}
+        run: ls && ls -R ${{ github.workspace }}
       - name: Release
         uses: softprops/action-gh-release@v2
       - uses: robinraju/release-downloader@v1
