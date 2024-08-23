@@ -3,6 +3,7 @@ name: "Release sigstore-go"
 on:
   workflow_dispatch: {} # TODO: change to release
   push: {} # TODO: Change to release
+  release: {}
 
 permissions:
   id-token: write
