@@ -29,15 +29,15 @@ jobs:
           ls ..
           cd ..
           mv ${{ github.event.repository.name }} ${{ github.event.repository.name }}-${{ github.ref_name }} 
-          zip ${{ github.event.repository.name }}-${{ github.ref_name }}.zip ${{ github.event.repository.name }}-${{ github.ref_name }}
+          zip ${{ github.event.repository.name }}-${{ github.ref_name }}/${{ github.event.repository.name }}-${{ github.ref_name }}.zip ${{ github.event.repository.name }}-${{ github.ref_name }}
           mv ${{ github.event.repository.name }}-${{ github.ref_name }} ${{ github.event.repository.name }}
           cd ${{ github.event.repository.name }}
-          #- name: Attest
-          #uses: actions/attest-build-provenance@v1
-          #with:
-          #subject-path: '../${{ github.event.repository.name }}-${{ github.ref_name }}.zip'
+      - name: Attest
+        uses: actions/attest-build-provenance@v1
+        with:
+        subject-path: '${{ github.event.repository.name }}-${{ github.ref_name }}.zip'
       - name: attest renamed zip
-        run: ls && ls -R ${{ github.workspace }}
+        run: ls && rm ${{ github.event.repository.name }}-${{ github.ref_name }}.zip && ls
       - name: Release
         uses: softprops/action-gh-release@v2
       - uses: robinraju/release-downloader@v1
