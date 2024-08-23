@@ -36,4 +36,5 @@ jobs:
           latest: true
           tarBall: true
           zipBall: true
+      - name: 'ls downloaded'
         run: ls -R
