@@ -36,5 +36,10 @@ jobs:
           latest: true
           tarBall: true
           zipBall: true
+          out-file-path: 'source-files' # download-path
       - name: 'ls downloaded'
         run: ls -R
+      - name: Attest
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: '${{ github.workspace }}/source-files/*'
