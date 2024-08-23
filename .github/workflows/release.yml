@@ -33,7 +33,7 @@ jobs:
           zipBall: true
           out-file-path: 'source-files' # download-path
       - name: 'ls downloaded'
-        run: ls -R && sha256sum ${{ github.workspace }}/source-files/*.zip
+        run: ls -R ${{ github.workspace }}/source-files/* && unzip ${{ github.workspace }}/source-files/*.zip && ls -R ${{ github.workspace }}/source-files/* sha256sum ${{ github.workspace }}/source-files/*.zip
       - name: Attest
         uses: actions/attest-build-provenance@v1
         with:
