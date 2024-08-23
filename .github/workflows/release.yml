@@ -27,3 +27,6 @@ jobs:
           ref: ${{ github.ref_name }}
       - name: Build binaries
         run: 'echo ${{ github.ref_name }} && git branch'
+      - uses: actions/download-artifact@v4
+      - name: Display structure of downloaded files
+        run: ls -R
