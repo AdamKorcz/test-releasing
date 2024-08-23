@@ -1,10 +1,9 @@
 name: "Release sigstore-go"
 
 on:
-  workflow_dispatch: {} # TODO: change to release
-  push: {} # TODO: Change to release
-  release: 
-    types: [published]
+  push:
+    tags:
+      - "v*.*.*"
 
 permissions:
   id-token: write
@@ -25,6 +24,8 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
           ref: ${{ github.ref_name }}
+      - name: Release
+        uses: softprops/action-gh-release@v2
       - uses: robinraju/release-downloader@v1
         with:
           latest: true
