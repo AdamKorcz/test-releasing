@@ -27,6 +27,7 @@ jobs:
       - name: lsss
         run: |
           ls ..
+          cd ..
           mv ${{ github.event.repository.name }} ${{ github.event.repository.name }}-${{ github.ref_name }} 
           zip ${{ github.event.repository.name }}-${{ github.ref_name }}.zip ${{ github.event.repository.name }}-${{ github.ref_name }}
       - name: attest renamed zip
