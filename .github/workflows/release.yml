@@ -38,15 +38,17 @@ jobs:
           mv "${REPO_NAME}" "${REPO_NAME}-${tag}"
           ls
           #mv ${{ github.event.repository.name }} ${{ github.event.repository.name }}-${{ github.ref_name }} 
-          zip "${REPO_NAME}"-tag.zip "${REPO_NAME}"-tag
-          sha256sum "${REPO_NAME}"-tag.zip
-          mv "${REPO_NAME}"-tag.zip "${REPO_NAME}"-tag/
-          mv "${REPO_NAME}"-tag "${REPO_NAME}"
+          zip "${REPO_NAME}-${tag}".zip "${REPO_NAME}-${tag}"
+          sha256sum "${REPO_NAME}-${tag}".zip
+          mv "${REPO_NAME}-${tag}".zip "${REPO_NAME}-${tag}"/
+          mv "${REPO_NAME}-${tag}" "${REPO_NAME}"
           cd "${REPO_NAME}"
+          echo "tag_zip_archive=${REPO_NAME}-${tag}.zip" >> "${GITHUB_OUTPUT}"
+        id: create_tag_zip
       - name: Attest sigstore-go-release_tag.zip
         uses: actions/attest-build-provenance@v1
         with:
-          subject-path: '${{ github.event.repository.name }}-${{ github.ref_name }}.zip'
+          subject-path: '${{ steps.create_tag_zip.outputs.tag_zip_archive }}'
       - name: Clean up sigstore-go-release_tag.zip
         env:
           REPO_NAME_WITH_TAG: '${{ github.event.repository.name }}-${{ github.ref_name }}'
