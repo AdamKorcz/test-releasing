@@ -35,6 +35,7 @@ jobs:
           ls
           #mv ${{ github.event.repository.name }} ${{ github.event.repository.name }}-${{ github.ref_name }} 
           zip "${REPO_NAME_WITH_TAG}".zip "${REPO_NAME_WITH_TAG}"
+          sha256sum "${REPO_NAME_WITH_TAG}".zip
           mv "${REPO_NAME_WITH_TAG}".zip "${REPO_NAME_WITH_TAG}"/
           mv "${REPO_NAME_WITH_TAG}" "${REPO_NAME}"
           cd "${REPO_NAME}"
