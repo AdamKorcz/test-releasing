@@ -35,7 +35,7 @@ jobs:
           # remove prefixed "v" from relase version
           tag=${RELEASE_VERSION#"v"}
           echo tag "${tag}"
-          mv "${REPO_NAME}" "${REPO_NAME}"-"${tag}"
+          mv "${REPO_NAME}" "${REPO_NAME}-${tag}"
           ls
           #mv ${{ github.event.repository.name }} ${{ github.event.repository.name }}-${{ github.ref_name }} 
           zip "${REPO_NAME}"-tag.zip "${REPO_NAME}"-tag
