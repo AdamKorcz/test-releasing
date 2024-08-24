@@ -32,8 +32,10 @@ jobs:
           ls ..
           cd ..
           mv "${REPO_NAME}" "${REPO_NAME_WITH_TAG}"
+          ls
           #mv ${{ github.event.repository.name }} ${{ github.event.repository.name }}-${{ github.ref_name }} 
-          zip -j "${REPO_NAME_WITH_TAG}/${REPO_NAME_WITH_TAG}".zip "${REPO_NAME_WITH_TAG}"
+          zip "${REPO_NAME_WITH_TAG}".zip "${REPO_NAME_WITH_TAG}"
+          mv "${REPO_NAME_WITH_TAG}".zip "${REPO_NAME_WITH_TAG}"/
           mv "${REPO_NAME_WITH_TAG}" "${REPO_NAME}"
           cd "${REPO_NAME}"
       - name: Attest sigstore-go-release_tag.zip
