@@ -24,6 +24,15 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
           ref: ${{ github.ref_name }}
+      - name: download-release
+        uses: robinraju/release-downloader@v1
+        with:
+          repository: 'AdamKorcz/test-releasing'
+          latest: true
+          zipBall: true
+      - name: extract
+        run: |
+          ls
       - name: Create sigstore-go-release_tag.zip
         env:
           REPO_NAME: '${{ github.event.repository.name }}'
