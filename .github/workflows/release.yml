@@ -64,6 +64,7 @@ jobs:
         run: |
           export shortened_sha=$(echo "${GITHUB_SHA}" | head -c 7)
           export directory="test-releasing"
+          export TAG_WITHOUT_V=${RELEASE_VERSION#"v"} # eg. v0.0.1 becomes 0.0.1
           cd ..
           if [ ! -d "$directory" ]; then
             exit 1
@@ -120,6 +121,26 @@ jobs:
                   "AdamKorcz-test-releasing-${shortened_sha}" \
                   "test-releasing-${{ github.ref_name }}.zip" \
                   "zip"
+          verify_compressed_dir \
+                  "AdamKorcz-test-releasing-${shortened_sha}" \
+                  "test-releasing-${{ github.ref_name }}.tar.gz" \
+                  "tar.gz"
+          verify_compressed_dir \
+                  "test-releasing-tags-${{ github.ref_name }}" \
+                  "test-releasing-tags-${{ github.ref_name }}.zip" \
+                  "zip"
+          verify_compressed_dir \
+                  "test-releasing-tags-${{ github.ref_name }}" \
+                  "test-releasing-tags-${{ github.ref_name }}.zip" \
+                  "tar.gz"
+          verify_compressed_dir \
+                  "test-releasing-${TAG_WITHOUT_V}" \
+                  "test-releasing-refs-tags-${{ github.ref_name }}.zip" \
+                  "zip"
+          verify_compressed_dir \
+                  "test-releasing-${TAG_WITHOUT_V}" \
+                  "test-releasing-refs-tags-${{ github.ref_name }}.tar.gz" \
+                  "tar.gz"
 
           # verifying first zip
           #export dir_name="AdamKorcz-test-releasing-${shortened_sha}"
@@ -132,55 +153,54 @@ jobs:
           #rm -r "${dir_name}"
 
           # verifying first tar gz
-          export dir_name="AdamKorcz-test-releasing-${shortened_sha}"
-          if [ -d "${dir_name}" ]; then
-            echo "${dir_name} already exists but shouldn't."
-            exit 1
-          fi
-          tar -xvzf source-archives/test-releasing-${{ github.ref_name }}.tar.gz
-          dirs_are_equal "${directory}" "${dir_name}"
-          rm -r "${dir_name}"
+          #export dir_name="AdamKorcz-test-releasing-${shortened_sha}"
+          #if [ -d "${dir_name}" ]; then
+          #  echo "${dir_name} already exists but shouldn't."
+          #  exit 1
+          #fi
+          #tar -xvzf source-archives/test-releasing-${{ github.ref_name }}.tar.gz
+          #dirs_are_equal "${directory}" "${dir_name}"
+          #rm -r "${dir_name}"
 
           # verifying second zip
-          export dir_name="test-releasing-tags-${{ github.ref_name }}"
-          if [ -d "${dir_name}" ]; then
-            echo "${dir_name} already exists but shouldn't."
-            exit 1
-          fi
-          unzip source-archives/test-releasing-tags-${{ github.ref_name }}.zip
-          dirs_are_equal "${directory}" "${dir_name}"
-          rm -r "${dir_name}"
+          #export dir_name="test-releasing-tags-${{ github.ref_name }}"
+          #if [ -d "${dir_name}" ]; then
+          #  echo "${dir_name} already exists but shouldn't."
+          #  exit 1
+          #fi
+          #unzip source-archives/test-releasing-tags-${{ github.ref_name }}.zip
+          #dirs_are_equal "${directory}" "${dir_name}"
+          #rm -r "${dir_name}"
 
           # verifying second tar gz
-          export dir_name="test-releasing-tags-${{ github.ref_name }}"
-          if [ -d "${dir_name}" ]; then
-            echo "${dir_name} already exists but shouldn't."
-            exit 1
-          fi
-          tar -xvzf source-archives/test-releasing-tags-${{ github.ref_name }}.tar.gz
-          dirs_are_equal "${directory}" "${dir_name}"
-          rm -r "${dir_name}"
+          #export dir_name="test-releasing-tags-${{ github.ref_name }}"
+          #if [ -d "${dir_name}" ]; then
+          #  echo "${dir_name} already exists but shouldn't."
+          #  exit 1
+          #fi
+          #tar -xvzf source-archives/test-releasing-tags-${{ github.ref_name }}.tar.gz
+          #dirs_are_equal "${directory}" "${dir_name}"
+          #rm -r "${dir_name}"
 
-          export TAG_WITHOUT_V=${RELEASE_VERSION#"v"} # eg. v0.0.1 becomes 0.0.1
           # verifying third zip
-          export dir_name="test-releasing-${TAG_WITHOUT_V}"
-          if [ -d "${dir_name}" ]; then
-            echo "${dir_name} already exists but shouldn't."
-            exit 1
-          fi
-          unzip source-archives/test-releasing-refs-tags-${{ github.ref_name }}.zip
-          dirs_are_equal "${directory}" "${dir_name}"
-          rm -r "${dir_name}"
+          #export dir_name="test-releasing-${TAG_WITHOUT_V}"
+          #if [ -d "${dir_name}" ]; then
+          #  echo "${dir_name} already exists but shouldn't."
+          #  exit 1
+          #fi
+          #unzip source-archives/test-releasing-refs-tags-${{ github.ref_name }}.zip
+          #dirs_are_equal "${directory}" "${dir_name}"
+          #rm -r "${dir_name}"
 
           # verifying third tar gz
-          export dir_name="test-releasing-${TAG_WITHOUT_V}"
-          if [ -d "${dir_name}" ]; then
-            echo "${dir_name} already exists but shouldn't."
-            exit 1
-          fi
-          tar -xvzf source-archives/test-releasing-refs-tags-${{ github.ref_name }}.tar.gz
-          dirs_are_equal "${directory}" "${dir_name}"
-          rm -r "${dir_name}"
+          #export dir_name="test-releasing-${TAG_WITHOUT_V}"
+          #if [ -d "${dir_name}" ]; then
+          #  echo "${dir_name} already exists but shouldn't."
+          #  exit 1
+          #fi
+          #tar -xvzf source-archives/test-releasing-refs-tags-${{ github.ref_name }}.tar.gz
+          #dirs_are_equal "${directory}" "${dir_name}"
+          #rm -r "${dir_name}"
       - name: Move source archive files
         run: |
           mv ${{ github.workspace }}/../source-archives ./
