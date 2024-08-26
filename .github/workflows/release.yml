@@ -61,9 +61,10 @@ jobs:
           ls && pwd && ls ${{ github.workspace }}/../source-archives
       - name: Upload the downloaded source archives
         uses: actions/upload-artifact@v4
+        working-directory: ${{ github.workspace }}/..
         with:
           name: source-archives
-          path: ${{ github.workspace }}/../source-archives
+          path: source-archives
 
 
 
