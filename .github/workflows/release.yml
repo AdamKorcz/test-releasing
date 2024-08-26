@@ -95,8 +95,8 @@ jobs:
 
           echo "verifying first zip"
           unzip test-releasing-${{ github.ref_name }}.zip && rm test-releasing-${{ github.ref_name }}.zip
-          dirs_are_equal "${directory}" AdamKorcz-test-releasing-"${GITHUB_SHA}"
-          rm -r AdamKorcz-test-releasing-"${GITHUB_SHA}"
+          dirs_are_equal "${directory}" AdamKorcz-test-releasing-"${shortened_sha}"
+          rm -r AdamKorcz-test-releasing-"${shortened_sha}"
 
           echo "verifying second zip"
           unzip ./manually-downloaded.zip && ls && rm ./manually-downloaded.zip 
