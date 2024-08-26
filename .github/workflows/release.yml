@@ -61,7 +61,7 @@ jobs:
           ls && pwd && ls ${{ github.workspace }}/../source-archives
           echo "lets unzip"
           cd ${{ github.workspace }}/../source-archives && unzip ./*.zip && tar -xvzf *.tar.gz
-
+          echo "lets ls"
           ls
 
 
