@@ -26,8 +26,8 @@ jobs:
       - name: Download archives from archive/refs/tags
         working-directory: ${{ github.workspace }}
         env:
-          zip_url: '"${REPO}"/releases/tag/${{ github.ref_name }}.zip'
-          tar_url: '"${REPO}"/releases/tag/${{ github.ref_name }}.tar.gz'
+          zip_url: 'https://github.com/AdamKorcz/test-releasing/releases/tag/${{ github.ref_name }}.zip'
+          tar_url: 'https://github.com/AdamKorcz/test-releasing/releases/tag/${{ github.ref_name }}.tar.gz'
         run: |
           ls && pwd && ls ${{ github.workspace }}
           mkdir source-archives
