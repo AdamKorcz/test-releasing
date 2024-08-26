@@ -104,9 +104,9 @@ jobs:
               exit 1
             fi
             if [ "$compressed_type" = "zip" ]; then
-              unzip source-archives/"${archive_name}".zip
+              unzip source-archives/"${archive_name}"
             else
-              tar -xvzf source-archives/"${archive_name}".tar.gz
+              tar -xvzf source-archives/"${archive_name}"
             fi
             #unzip source-archives/test-releasing-${{ github.ref_name }}.zip
             dirs_are_equal "${directory}" "${dir_name}"
