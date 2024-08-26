@@ -51,7 +51,7 @@ jobs:
           DEST_DIR: '${{ github.workspace }}/../source-archives'
         run: |
           ls && pwd && ls ${{ github.workspace }}
-          export DEST_DIR=
+          export DEST_DIR="${{ github.workspace }}/../source-archives"
           wget "${REPO}"/archive/tags/${{ github.ref_name }}.zip -O "${DEST_DIR}"/test-releasing-tags-${{ github.ref_name }}.zip
           wget "${REPO}"/archive/tags/${{ github.ref_name }}.tar.gz -O "${DEST_DIR}"/test-releasing-tags-${{ github.ref_name }}.tar.gz
           wget "${REPO}"/archive/refs/tags/${{ github.ref_name }}.zip -O "${DEST_DIR}"/test-releasing-refs-tags-${{ github.ref_name }}.zip
