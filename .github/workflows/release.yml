@@ -72,7 +72,6 @@ jobs:
             trusted_dir=$2
             untrusted_dir=$3
             path="${trusted_dir}/${filename#*/}"
-            echo verifying "${path}" and "${path2}"
             cs_file1=$(sha256sum "${path}" | head -c 64)
 
             path2="${untrusted_dir}/${filename#*/}"
@@ -107,7 +106,7 @@ jobs:
           rm -r AdamKorcz-test-releasing-"${shortened_sha}"
 
           echo "verifying second zip"
-          unzip ./manually-downloaded.zip && ls && rm ./manually-downloaded.zip 
+          unzip source-archives/manually-downloaded.zip && ls && rm source-archives/manually-downloaded.zip 
           dirs_are_equal "${directory}" test-releasing-tags-${{ github.ref_name }}
           rm -r test-releasing-tags-${{ github.ref_name }}
           
