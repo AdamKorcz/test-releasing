@@ -115,6 +115,7 @@ jobs:
           echo "Verifying all downloaded source archives"
           echo AdamKorcz-test-releasing-"${shortened_sha}"
 
+          ls source-archives
           verify_compressed_dir \
                   "AdamKorcz-test-releasing-${shortened_sha}" \
                   "test-releasing-${{ github.ref_name }}.zip" \
