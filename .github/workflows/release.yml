@@ -121,14 +121,14 @@ jobs:
                   "zip"
 
           # verifying first zip
-#          export dir_name="AdamKorcz-test-releasing-${shortened_sha}"
-#          if [ -d "${dir_name}" ]; then
-#            echo "${dir_name} already exists but shouldn't."
-#            exit 1
-#          fi
-#          unzip source-archives/test-releasing-${{ github.ref_name }}.zip
-#          dirs_are_equal "${directory}" "${dir_name}"
-#          rm -r "${dir_name}"
+          #export dir_name="AdamKorcz-test-releasing-${shortened_sha}"
+          #if [ -d "${dir_name}" ]; then
+          #  echo "${dir_name} already exists but shouldn't."
+          #  exit 1
+          #fi
+          #unzip source-archives/test-releasing-${{ github.ref_name }}.zip
+          #dirs_are_equal "${directory}" "${dir_name}"
+          #rm -r "${dir_name}"
 
           # verifying first tar gz
           export dir_name="AdamKorcz-test-releasing-${shortened_sha}"
