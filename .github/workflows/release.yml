@@ -45,10 +45,6 @@ jobs:
           tarBall: true
           out-file-path: '${{ github.workspace }}/../source-archives' # download-path
           tag: ${{ github.ref_name }}
-      - uses: actions/upload-artifact@v4
-        with:
-          name: 'downloaded-source-archives'
-          path: '${{ github.workspace }}/source-archives'
       - name: Download archives from archive/tags
         working-directory: ${{ github.workspace }}
         env:
@@ -61,7 +57,7 @@ jobs:
           ls && pwd && ls ${{ github.workspace }}/../source-archives
           echo "lets unzip"
           cd ${{ github.workspace }}/../source-archives 
-          unzip ./manually-downloaded.zip && ls && rm ./manually-downloaded.zip && rm -r test-releasing-tags-v0.0.60
+          unzip ./manually-downloaded.zip && ls && rm ./manually-downloaded.zip && rm -r test-releasing-tags-${{ github.ref_name }}
           unzip test-releasing-v0.0.60.zip && echo "NEW LS" && ls
       - name: Verify all downloaded source archives
         run: |
