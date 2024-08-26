@@ -91,7 +91,8 @@ jobs:
             if [ "$number_of_files1" != "$number_of_files2" ]; then echo "WRONG" && exit 1; else echo "SAME AMOUNT OF FILES"; fi
             echo $number_of_files1 $number_of_files2
           }
-          echo AdamKorcz-test-releasing-$GITHUB_SHA
+          shortened_sha=$(echo "${GITHUB_SHA}" | head -c 64)
+          echo AdamKorcz-test-releasing-"${shortened_sha}"
           dirs_are_equal "${directory}" AdamKorcz-test-releasing-"${GITHUB_SHA}"
 
 
