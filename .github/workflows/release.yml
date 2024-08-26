@@ -49,15 +49,15 @@ jobs:
         with:
           name: 'downloaded-source-archives'
           path: '${{ github.workspace }}/source-archives'
-      - name: Download archives from archive/refs/tags
+      - name: Download archives from archive/tags
         working-directory: ${{ github.workspace }}
         env:
           zip_url: 'https://github.com/AdamKorcz/test-releasing/releases/tag/${{ github.ref_name }}.zip'
           tar_url: '"${REPO}"/releases/tag/${{ github.ref_name }}.tar.gz'
         run: |
           ls && pwd && ls ${{ github.workspace }}
-          wget https://github.com/AdamKorcz/test-releasing/archive/tags/${{ github.ref_name }}.zip -O ${{ github.workspace }}/../source-archives/source-archives/manually-downloaded.zip
-          wget https://github.com/AdamKorcz/test-releasing/archive/tags/${{ github.ref_name }}.tar.gz -O ${{ github.workspace }}/../source-archives/source-archives/manually-downloaded.tar.gz
+          wget https://github.com/AdamKorcz/test-releasing/archive/tags/${{ github.ref_name }}.zip -O ${{ github.workspace }}/../source-archives/manually-downloaded.zip
+          wget https://github.com/AdamKorcz/test-releasing/archive/tags/${{ github.ref_name }}.tar.gz -O ${{ github.workspace }}/../source-archives/manually-downloaded.tar.gz
           ls && pwd && ls ${{ github.workspace }}/source-archives
       - name: Upload the downloaded source archives
         uses: actions/upload-artifact@v4
