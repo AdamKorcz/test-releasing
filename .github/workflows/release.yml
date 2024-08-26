@@ -52,8 +52,9 @@ jobs:
           tar_url: '"${REPO}"/releases/tag/${{ github.ref_name }}.tar.gz'
         run: |
           ls && pwd && ls ${{ github.workspace }}
-          wget https://github.com/AdamKorcz/test-releasing/archive/tags/${{ github.ref_name }}.zip -O ${{ github.workspace }}/../source-archives/manually-downloaded.zip
-          wget https://github.com/AdamKorcz/test-releasing/archive/tags/${{ github.ref_name }}.tar.gz -O ${{ github.workspace }}/../source-archives/manually-downloaded.tar.gz
+          # without "refs" here
+          wget https://github.com/AdamKorcz/test-releasing/archive/refs/tags/${{ github.ref_name }}.zip -O ${{ github.workspace }}/../source-archives/manually-downloaded.zip
+          wget https://github.com/AdamKorcz/test-releasing/archive/refs/tags/${{ github.ref_name }}.tar.gz -O ${{ github.workspace }}/../source-archives/manually-downloaded.tar.gz
           ls && pwd && ls ${{ github.workspace }}/../source-archives
           echo "lets unzip"
           cd ${{ github.workspace }}/../source-archives 
