@@ -61,10 +61,37 @@ jobs:
           ls && pwd && ls ${{ github.workspace }}/../source-archives
           echo "lets unzip"
           cd ${{ github.workspace }}/../source-archives 
-          unzip ./manually-downloaded.zip && ls
-          tar -xvzf manually-downloaded.tar.gz && ls
-          echo "lets ls"
-          ls
+          unzip ./manually-downloaded.zip && ls && rm ./manually-downloaded.zip && rm -r test-releasing-tags-v0.0.60
+          unzip test-releasing-v0.0.60.zip && echo "NEW LS" && ls
+      - name: Verify all downloaded source archives
+        run: |
+          export directory="test-releasing"
+          if [ ! -d "$directory" ]; then
+            exit 1
+          fi
+
+          verify_file() {
+            filename=$1
+            trusted_dir=$2
+            untrusted_dir=$3
+            path="${trusted_dir}/${filename#*/}"
+            cs_file1=$(sha256sum "${path}" | head -c 64)
+
+            path2="${untrusted_dir}/${filename#*/}"
+            cs_file2=$(sha256sum "${path2}" | head -c 64)
+            if [ "$cs_file1" != "$cs_file2" ]; then exit 1; fi
+          }
+          export -f verify_file
+
+          dirs_are_equal() {
+            export trusted_dir=$1
+            export untrusted_dir=$2 
+            find $trusted_dir -type f -exec bash -c 'verify_file {} $trusted_dir $untrusted_dir' \;
+            number_of_files1=$(find test-releasing -type f | wc -l)
+            number_of_files2=$(find test-releasing2 -type f | wc -l)
+            if [ "$number_of_files1" != "$number_of_files2" ]; then echo "WRONG" && exit 1; else echo "SAME AMOUNT OF FILES"; fi
+            echo $number_of_files1 $number_of_files2
+          }
 
 
 
