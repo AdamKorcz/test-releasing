@@ -58,7 +58,7 @@ jobs:
           echo "lets unzip"
           cd ${{ github.workspace }}/../source-archives 
           unzip ./manually-downloaded.zip && ls && rm ./manually-downloaded.zip && rm -r test-releasing-tags-${{ github.ref_name }}
-          unzip test-releasing-v0.0.60.zip && echo "NEW LS" && ls
+          unzip test-releasing-${{ github.ref_name }}.zip && echo "NEW LS" && ls
       - name: Verify all downloaded source archives
         run: |
           export directory="test-releasing"
