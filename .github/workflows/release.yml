@@ -59,8 +59,8 @@ jobs:
           cd ${{ github.workspace }}/../source-archives 
           unzip ./manually-downloaded.zip && ls && rm ./manually-downloaded.zip && rm -r test-releasing-tags-${{ github.ref_name }}
           unzip test-releasing-${{ github.ref_name }}.zip && echo "NEW LS" && ls
-        working-directory: ${{ github.workspace }}
       - name: Verify all downloaded source archives
+        working-directory: ${{ github.workspace }}
         run: |
           cd ..
           ls
