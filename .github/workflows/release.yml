@@ -95,6 +95,8 @@ jobs:
 
           echo "verifying first zip"
           ls
+          echo and ls source-archives
+          ls source-archives
           unzip test-releasing-${{ github.ref_name }}.zip && rm test-releasing-${{ github.ref_name }}.zip
           dirs_are_equal "${directory}" AdamKorcz-test-releasing-"${shortened_sha}"
           rm -r AdamKorcz-test-releasing-"${shortened_sha}"
