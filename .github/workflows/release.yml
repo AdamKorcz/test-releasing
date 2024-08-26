@@ -60,7 +60,9 @@ jobs:
           wget https://github.com/AdamKorcz/test-releasing/archive/tags/${{ github.ref_name }}.tar.gz -O ${{ github.workspace }}/../source-archives/manually-downloaded.tar.gz
           ls && pwd && ls ${{ github.workspace }}/../source-archives
           echo "lets unzip"
-          cd ${{ github.workspace }}/../source-archives && unzip ./*.zip && tar -xvzf *.tar.gz
+          cd ${{ github.workspace }}/../source-archives 
+          unzip ./manually-downloaded.zip && ls
+          tar -xvzf manually-downloaded.tar.gz && ls
           echo "lets ls"
           ls
 
