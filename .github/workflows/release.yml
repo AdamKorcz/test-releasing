@@ -100,13 +100,12 @@ jobs:
           ls source-archives
           unzip source-archives/test-releasing-${{ github.ref_name }}.zip 
           echo and ls here
-          ls 
-          rm -r source-archives/test-releasing-${{ github.ref_name }}.zip
+          ls
           dirs_are_equal "${directory}" AdamKorcz-test-releasing-"${shortened_sha}"
           rm -r AdamKorcz-test-releasing-"${shortened_sha}"
 
           echo "verifying second zip"
-          unzip source-archives/manually-downloaded.zip && ls && rm source-archives/manually-downloaded.zip 
+          unzip source-archives/manually-downloaded.zip
           dirs_are_equal "${directory}" test-releasing-tags-${{ github.ref_name }}
           rm -r test-releasing-tags-${{ github.ref_name }}
 
@@ -116,13 +115,12 @@ jobs:
           ls source-archives
           tar -xvzf source-archives/test-releasing-${{ github.ref_name }}.tar.gz 
           echo and ls here
-          ls 
-          rm -r source-archives/test-releasing-${{ github.ref_name }}.tar.gz
+          ls
           dirs_are_equal "${directory}" AdamKorcz-test-releasing-"${shortened_sha}"
           rm -r AdamKorcz-test-releasing-"${shortened_sha}"
 
           echo "verifying second tar gz"
-          tar -xvzf source-archives/manually-downloaded.tar.gz && ls && rm source-archives/manually-downloaded.tar.gz
+          tar -xvzf source-archives/manually-downloaded.tar.gz
           dirs_are_equal "${directory}" test-releasing-tags-${{ github.ref_name }}
           rm -r test-releasing-tags-${{ github.ref_name }}
           
