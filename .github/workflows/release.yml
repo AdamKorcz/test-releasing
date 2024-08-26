@@ -38,15 +38,16 @@ jobs:
         with:
           latest: true
           zipBall: true
-          out-file-path: '${{ github.workspace }}/../source-archives' # download-path
-          tag: ${{ github.ref_name }}
-      - name: Download tar source archive from API
-        uses: robinraju/release-downloader@v1
-        with:
-          latest: true
           tarBall: true
           out-file-path: '${{ github.workspace }}/../source-archives' # download-path
           tag: ${{ github.ref_name }}
+#      - name: Download tar source archive from API
+#        uses: robinraju/release-downloader@v1
+#        with:
+#          latest: true
+#          tarBall: true
+#          out-file-path: '${{ github.workspace }}/../source-archives' # download-path
+#          tag: ${{ github.ref_name }}
       - name: Download archives from archive/tags
         working-directory: ${{ github.workspace }}
         env:
