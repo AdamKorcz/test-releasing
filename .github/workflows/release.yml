@@ -136,6 +136,7 @@ jobs:
       - name: Move source archive files
         run: |
           mv ${{ github.workspace }}/../source-archives ./
+          find source-archives -type f -exec bash -c 'echo {} && sha256sum {}' \;
       - name: Attest all
         uses: actions/attest-build-provenance@v1
         with:
