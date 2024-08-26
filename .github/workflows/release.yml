@@ -101,8 +101,8 @@ jobs:
             exit 1
           fi
           unzip source-archives/test-releasing-${{ github.ref_name }}.zip
-          dirs_are_equal "${directory}" AdamKorcz-test-releasing-"${shortened_sha}"
-          rm -r AdamKorcz-test-releasing-"${shortened_sha}"
+          dirs_are_equal "${directory}" "${dir_name}"
+          rm -r "${dir_name}"
 
           echo "verifying second zip"
           export dir_name="test-releasing-tags-${{ github.ref_name }}"
@@ -111,26 +111,28 @@ jobs:
             exit 1
           fi
           unzip source-archives/manually-downloaded.zip
-          dirs_are_equal "${directory}" test-releasing-tags-${{ github.ref_name }}
-          rm -r test-releasing-tags-${{ github.ref_name }}
+          dirs_are_equal "${directory}" "${dir_name}"
+          rm -r "${dir_name}"
 
           echo "verifying first tar gz"
-          if [ -d "AdamKorcz-test-releasing-"${shortened_sha}" ]; then
-            echo "AdamKorcz-test-releasing-"${shortened_sha} already exists but shouldn't."
+          export dir_name="AdamKorcz-test-releasing-${shortened_sha}"
+          if [ -d "${dir_name}" ]; then
+            echo "${dir_name} already exists but shouldn't."
             exit 1
           fi
           tar -xvzf source-archives/test-releasing-${{ github.ref_name }}.tar.gz
-          dirs_are_equal "${directory}" AdamKorcz-test-releasing-"${shortened_sha}"
-          rm -r AdamKorcz-test-releasing-"${shortened_sha}"
+          dirs_are_equal "${directory}" "${dir_name}"
+          rm -r "${dir_name}"
 
           echo "verifying second tar gz"
-          if [ -d "test-releasing-tags-${{ github.ref_name }}" ]; then
-            echo "test-releasing-tags-${{ github.ref_name }} already exists but shouldn't."
+          export dir_name="test-releasing-tags-${{ github.ref_name }}"
+          if [ -d "${dir_name}" ]; then
+            echo "${dir_name} already exists but shouldn't."
             exit 1
           fi
           tar -xvzf source-archives/manually-downloaded.tar.gz
-          dirs_are_equal "${directory}" test-releasing-tags-${{ github.ref_name }}
-          rm -r test-releasing-tags-${{ github.ref_name }}
+          dirs_are_equal "${directory}" "${dir_name}"
+          rm -r "${dir_name}"
           
 
 
