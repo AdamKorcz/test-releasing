@@ -30,6 +30,7 @@ jobs:
         run: |
           mkdir "${ZIP_ARCHIVES}"
           mkdir "${TAR_ARCHIVES}"
+          ls && pwd && ls ${{ github.workspace }}
       - name: Checkout repository
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
