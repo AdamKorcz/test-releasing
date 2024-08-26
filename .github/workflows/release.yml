@@ -7,8 +7,6 @@ on:
 
 env:
   REPO: 'https://github.com/AdamKorcz/test-releasing'
-  ZIP_ARCHIVES: '${{ github.workspace }}/manually-downloaded-zip'
-  TAR_ARCHIVES: '${{ github.workspace }}/manually-downloaded-tar'
 
 permissions:
   id-token: write
@@ -25,18 +23,6 @@ jobs:
     steps:
       - name: Release
         uses: softprops/action-gh-release@v2
-      - name: Setup download directories
-        working-directory: ${{ github.workspace }}
-        run: |
-          mkdir "${ZIP_ARCHIVES}"
-          mkdir "${TAR_ARCHIVES}"
-          ls && pwd && ls ${{ github.workspace }}
-      - name: Checkout repository
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
-        with:
-          fetch-depth: 0
-          fetch-tags: true
-          ref: ${{ github.ref_name }}
       - name: Download archives from archive/refs/tags
         working-directory: ${{ github.workspace }}
         env:
@@ -44,30 +30,45 @@ jobs:
           tar_url: '${REPO}/releases/tag/${{ github.ref_name }}.tar.gz'
         run: |
           ls && pwd && ls ${{ github.workspace }}
-          wget "${zip_url}" -O "${ZIP_ARCHIVES}"/manually-downloaded.zip
-          wget "${tar_url}" -O "${TAR_ARCHIVES}"/manually-downloaded.tar.gz
+          mkdir source-archives
+          wget "${zip_url}" -O source-archives/manually-downloaded.zip
+          wget "${tar_url}" -O source-archives/manually-downloaded.tar.gz
       - name: Download zip source archive from API
         uses: robinraju/release-downloader@v1
         with:
           latest: true
           zipBall: true
-          out-file-path: '${{ github.workspace }}/"${ZIP_ARCHIVES}"/' # download-path
+          out-file-path: '${{ github.workspace }}/source-archives' # download-path
           tag: ${{ github.ref_name }}
       - name: Download tar source archive from API
         uses: robinraju/release-downloader@v1
         with:
           latest: true
           tarBall: true
-          out-file-path: '${{ github.workspace }}/"${TAR_ARCHIVES}"/' # download-path
+          out-file-path: '${{ github.workspace }}/source-archives' # download-path
           tag: ${{ github.ref_name }}
-      - name: Extract all downloaded source archives
-        working-directory: ${{ github.workspace }}
-        run: |
-          cd "${ZIP_ARCHIVES}" && unzip *.zip && cd ..
-          cd "${TAR_ARCHIVES}" && tar -xvzf *.tar.gz && cd ..
-          echo "ls" && ls
-          echo "${ZIP_ARCHIVES}" && ls "${ZIP_ARCHIVES}""
-          echo "${TAR_ARCHIVES}" && ls "${TAR_ARCHIVES}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 'downloaded-source-archives'
+          path: '${{ github.workspace }}/source-archives'
+
+
+
+
+      - name: Checkout repository
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+          ref: ${{ github.ref_name }}
+#      - name: Extract all downloaded source archives
+#        working-directory: ${{ github.workspace }}
+#        run: |
+#          cd "${ZIP_ARCHIVES}" && unzip *.zip && cd ..
+#          cd "${TAR_ARCHIVES}" && tar -xvzf *.tar.gz && cd ..
+#          echo "ls" && ls
+#          echo "${ZIP_ARCHIVES}" && ls "${ZIP_ARCHIVES}""
+#          echo "${TAR_ARCHIVES}" && ls "${TAR_ARCHIVES}"
 
 #      - name: 'ls downloaded'
 #        run: ls -R ${{ github.workspace }}/source-files/* && unzip ${{ github.workspace }}/source-files/*.zip && ls -R ${{ github.workspace }}/source-files/* && sha256sum ${{ github.workspace }}/source-files/*.zip
