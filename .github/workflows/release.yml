@@ -62,8 +62,9 @@ jobs:
           REPO_NAME: '${{ github.event.repository.name }}'
           RELEASE_VERSION: '${{ github.ref_name }}'
         run: |
-          cd ..
+          export shortened_sha=$(echo "${GITHUB_SHA}" | head -c 7)
           export directory="test-releasing"
+          cd ..
           if [ ! -d "$directory" ]; then
             exit 1
           fi
@@ -91,19 +92,43 @@ jobs:
             if [ "$number_of_files1" != "$number_of_files2" ]; then echo "WRONG" && exit 1; else echo "SAME AMOUNT OF FILES"; fi
             echo $number_of_files1 $number_of_files2
           }
+
+          verify_compressed_dir() {
+            extracted_dir_name=$1
+            archive_name=$2
+            compressed_type=$3
+
+            export dir_name="${extracted_dir_name}"
+            if [ -d "${dir_name}" ]; then
+              echo "${dir_name} already exists but shouldn't."
+              exit 1
+            fi
+            if [ "$compressed_type" = "zip" ]; then
+              unzip source-archives/"${archive_name}".zip
+            else
+              tar -xvzf source-archives/"${archive_name}".tar.gz
+            fi
+            #unzip source-archives/test-releasing-${{ github.ref_name }}.zip
+            dirs_are_equal "${directory}" "${dir_name}"
+            rm -r "${dir_name}"
+          }
           echo "Verifying all downloaded source archives"
-          export shortened_sha=$(echo "${GITHUB_SHA}" | head -c 7)
           echo AdamKorcz-test-releasing-"${shortened_sha}"
 
+          verify_compressed_dir \
+                  "AdamKorcz-test-releasing-${shortened_sha}" \
+                  "test-releasing-${{ github.ref_name }}.zip" \
+                  "zip"
+
           # verifying first zip
-          export dir_name="AdamKorcz-test-releasing-${shortened_sha}"
-          if [ -d "${dir_name}" ]; then
-            echo "${dir_name} already exists but shouldn't."
-            exit 1
-          fi
-          unzip source-archives/test-releasing-${{ github.ref_name }}.zip
-          dirs_are_equal "${directory}" "${dir_name}"
-          rm -r "${dir_name}"
+#          export dir_name="AdamKorcz-test-releasing-${shortened_sha}"
+#          if [ -d "${dir_name}" ]; then
+#            echo "${dir_name} already exists but shouldn't."
+#            exit 1
+#          fi
+#          unzip source-archives/test-releasing-${{ github.ref_name }}.zip
+#          dirs_are_equal "${directory}" "${dir_name}"
+#          rm -r "${dir_name}"
 
           # verifying first tar gz
           export dir_name="AdamKorcz-test-releasing-${shortened_sha}"
