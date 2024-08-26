@@ -59,7 +59,9 @@ jobs:
           wget https://github.com/AdamKorcz/test-releasing/archive/tags/${{ github.ref_name }}.zip -O ${{ github.workspace }}/../source-archives/manually-downloaded.zip
           wget https://github.com/AdamKorcz/test-releasing/archive/tags/${{ github.ref_name }}.tar.gz -O ${{ github.workspace }}/../source-archives/manually-downloaded.tar.gz
           ls && pwd && ls ${{ github.workspace }}/../source-archives
+          echo "lets unzip"
           cd ${{ github.workspace }}/../source-archives && unzip ./*.zip && tar -xvzf *.tar.gz
+
           ls
 
 
