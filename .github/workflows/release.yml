@@ -52,7 +52,7 @@ jobs:
           wget https://github.com/AdamKorcz/test-releasing/archive/tags/${{ github.ref_name }}.tar.gz -O source-archives/manually-downloaded.tar.gz
           ls && pwd && ls ${{ github.workspace }}/source-archives
       - name: Upload the downloaded source archives
-        suses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4
         with:
           name: source-archives
           path: ${{ github.workspace }}/source-archives
