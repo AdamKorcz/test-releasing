@@ -133,22 +133,25 @@ jobs:
           tar -xvzf source-archives/manually-downloaded.tar.gz
           dirs_are_equal "${directory}" "${dir_name}"
           rm -r "${dir_name}"
+      - name: Move source archive files
+        run: |
+          mv ${{ github.workspace }}/../source-archives ./
       - name: Attest first.zip
         uses: actions/attest-build-provenance@v1
         with:
-          subject-path: '${{ github.workspace }}/../source-archives/test-releasing-${{ github.ref_name }}.zip'
+          subject-path: 'source-archives/test-releasing-${{ github.ref_name }}.zip'
       - name: Attest second.zip
         uses: actions/attest-build-provenance@v1
         with:
-          subject-path: '${{ github.workspace }}/../source-archives/manually-downloaded.zip'
+          subject-path: 'source-archives/manually-downloaded.zip'
       - name: Attest first.tar
         uses: actions/attest-build-provenance@v1
         with:
-          subject-path: '${{ github.workspace }}/../source-archives/test-releasing-${{ github.ref_name }}.tar.gz'
+          subject-path: 'source-archives/test-releasing-${{ github.ref_name }}.tar.gz'
       - name: Attest second.tar
         uses: actions/attest-build-provenance@v1
         with:
-          subject-path: '${{ github.workspace }}/../source-archives/manually-downloaded.tar.gz'
+          subject-path: 'source-archives/manually-downloaded.tar.gz'
           
 
 
