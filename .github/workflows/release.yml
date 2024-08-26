@@ -23,16 +23,6 @@ jobs:
     steps:
       - name: Release
         uses: softprops/action-gh-release@v2
-      - name: Download archives from archive/refs/tags
-        working-directory: ${{ github.workspace }}
-        env:
-          zip_url: 'https://github.com/AdamKorcz/test-releasing/releases/tag/${{ github.ref_name }}.zip'
-          tar_url: 'https://github.com/AdamKorcz/test-releasing/releases/tag/${{ github.ref_name }}.tar.gz'
-        run: |
-          ls && pwd && ls ${{ github.workspace }}
-          mkdir source-archives
-          wget "${zip_url}" -O source-archives/manually-downloaded.zip
-          wget "${tar_url}" -O source-archives/manually-downloaded.tar.gz
       - name: Download zip source archive from API
         uses: robinraju/release-downloader@v1
         with:
@@ -51,6 +41,16 @@ jobs:
         with:
           name: 'downloaded-source-archives'
           path: '${{ github.workspace }}/source-archives'
+      - name: Download archives from archive/refs/tags
+        working-directory: ${{ github.workspace }}
+        env:
+          zip_url: '"${REPO}"/releases/tag/${{ github.ref_name }}.zip'
+          tar_url: '"${REPO}"/releases/tag/${{ github.ref_name }}.tar.gz'
+        run: |
+          ls && pwd && ls ${{ github.workspace }}
+          mkdir source-archives
+          wget "${zip_url}" -O source-archives/manually-downloaded.zip
+          wget "${tar_url}" -O source-archives/manually-downloaded.tar.gz
 
 
 
