@@ -57,8 +57,6 @@ jobs:
           ls && pwd && ls ${{ github.workspace }}/../source-archives
           echo "lets unzip"
           cd ${{ github.workspace }}/../source-archives 
-          unzip ./manually-downloaded.zip && ls && rm ./manually-downloaded.zip && rm -r test-releasing-tags-${{ github.ref_name }}
-          unzip test-releasing-${{ github.ref_name }}.zip && echo "NEW LS" && ls
       - name: Verify all downloaded source archives
         working-directory: ${{ github.workspace }}
         run: |
@@ -91,9 +89,20 @@ jobs:
             if [ "$number_of_files1" != "$number_of_files2" ]; then echo "WRONG" && exit 1; else echo "SAME AMOUNT OF FILES"; fi
             echo $number_of_files1 $number_of_files2
           }
+          echo "Verifying all downloaded source archives"
           shortened_sha=$(echo "${GITHUB_SHA}" | head -c 7)
           echo AdamKorcz-test-releasing-"${shortened_sha}"
+
+          echo "verifying first zip"
+          unzip test-releasing-${{ github.ref_name }}.zip && rm test-releasing-${{ github.ref_name }}.zip
           dirs_are_equal "${directory}" AdamKorcz-test-releasing-"${GITHUB_SHA}"
+          rm -r AdamKorcz-test-releasing-"${GITHUB_SHA}"
+
+          echo "verifying second zip"
+          unzip ./manually-downloaded.zip && ls && rm ./manually-downloaded.zip 
+          dirs_are_equal "${directory}" test-releasing-tags-${{ github.ref_name }}
+          rm -r test-releasing-tags-${{ github.ref_name }}
+          
 
 
 
