@@ -72,10 +72,12 @@ jobs:
             trusted_dir=$2
             untrusted_dir=$3
             path="${trusted_dir}/${filename#*/}"
+            echo verifying "${path}" and "${path2}"
             cs_file1=$(sha256sum "${path}" | head -c 64)
 
             path2="${untrusted_dir}/${filename#*/}"
             cs_file2=$(sha256sum "${path2}" | head -c 64)
+            echo verifying "${path}" and "${path2}"
             if [ "$cs_file1" != "$cs_file2" ]; then exit 1; fi
           }
           export -f verify_file
