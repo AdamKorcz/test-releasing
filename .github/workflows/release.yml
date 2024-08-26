@@ -91,12 +91,13 @@ jobs:
             echo $number_of_files1 $number_of_files2
           }
           echo "Verifying all downloaded source archives"
-          shortened_sha=$(echo "${GITHUB_SHA}" | head -c 7)
+          export shortened_sha=$(echo "${GITHUB_SHA}" | head -c 7)
           echo AdamKorcz-test-releasing-"${shortened_sha}"
 
           echo "verifying first zip"
-          if [ -d "AdamKorcz-test-releasing-${shortened_sha}" ]; then
-            echo "AdamKorcz-test-releasing-${shortened_sha}" already exists but shouldn't."
+          export dir_name="AdamKorcz-test-releasing-${shortened_sha}"
+          if [ -d "${dir_name}" ]; then
+            echo "${dir_name} already exists but shouldn't."
             exit 1
           fi
           unzip source-archives/test-releasing-${{ github.ref_name }}.zip
@@ -104,8 +105,9 @@ jobs:
           rm -r AdamKorcz-test-releasing-"${shortened_sha}"
 
           echo "verifying second zip"
-          if [ -d "test-releasing-tags-${{ github.ref_name }}" ]; then
-            echo "test-releasing-tags-${{ github.ref_name }} already exists but shouldn't."
+          export dir_name="test-releasing-tags-${{ github.ref_name }}"
+          if [ -d "${dir_name}" ]; then
+            echo "${dir_name} already exists but shouldn't."
             exit 1
           fi
           unzip source-archives/manually-downloaded.zip
