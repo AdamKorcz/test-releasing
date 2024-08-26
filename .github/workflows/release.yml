@@ -83,9 +83,9 @@ jobs:
           dirs_are_equal() {
             export trusted_dir=$1
             export untrusted_dir=$2 
-            find $trusted_dir -type f -not "*.git/" -exec bash -c 'verify_file {} $trusted_dir $untrusted_dir' \;
-            number_of_files1=$(find "${trusted_dir}" -type f -not "*.git/" | wc -l)
-            number_of_files2=$(find "${untrusted_dir}" -type f -not "*.git/" | wc -l)
+            find $trusted_dir -type f -not -path "*.git/" -exec bash -c 'verify_file {} $trusted_dir $untrusted_dir' \;
+            number_of_files1=$(find "${trusted_dir}" -type f -not -path "*.git/" | wc -l)
+            number_of_files2=$(find "${untrusted_dir}" -type f -not -path "*.git/" | wc -l)
             if [ "$number_of_files1" != "$number_of_files2" ]; then echo "WRONG" && exit 1; else echo "SAME AMOUNT OF FILES"; fi
             echo $number_of_files1 $number_of_files2
           }
